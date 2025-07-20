@@ -1,0 +1,68 @@
+<style>
+.slideshow-container {
+    position: relative;
+    max-width: 80%px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+.slide {
+    display: none;
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+.active {
+    display: block;
+}
+.button {
+    position: absolute;
+    top: 50%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 100;
+}
+.prev {
+    left: 10px;
+}
+.next {
+    right: 10px;
+}
+</style>
+
+<div class="slideshow-container">
+  <img src="images/rf_boundary__01.png" class="slide active">
+  <img src="images/rf_boundary__02.png" class="slide">
+  <img src="images/rf_boundary__03.png" class="slide">
+  <img src="images/rf_boundary__04.png" class="slide">
+  <img src="images/rf_boundary__05.png" class="slide">
+  <button class="button prev" onclick="changeSlide(-1, this)">&#10094;</button>
+  <button class="button next" onclick="changeSlide(1, this)">&#10095;</button>
+</div>
+
+
+<script>
+const indices = new Map();
+
+function changeSlide(direction, button) {
+    const container = button.closest('.slideshow-container');
+    const slides = container.querySelectorAll('.slide');
+
+    if (!indices.has(container)) {
+        indices.set(container, 0);
+    }
+
+    let currentIndex = indices.get(container);
+    slides[currentIndex].classList.remove('active');
+
+    currentIndex = (currentIndex + direction + slides.length) % slides.length;
+    slides[currentIndex].classList.add('active');
+
+    indices.set(container, currentIndex);
+}
+</script>
